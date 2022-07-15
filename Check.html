@@ -22,6 +22,7 @@
         <th data-column="FirstName" data-order="desc">FirstName &#9650</th>
         <th data-column="LastName" data-order="desc">LastName &#9650</th>
         <th data-column="BirthDate" data-order="desc">BirthDate &#9650</th>
+		<th data-column="Waiver" data-order="desc">Waiver &#9650</th>
     </tr>
 
     <tbody id="myTable">
@@ -31,9 +32,7 @@
 
 <script>
 	var Users = [
-        {"UserID":"1", "FirstName": "John", "LastName": "Doe", "BirthDate": "08/04/2001"},
-        {"UserID":"2", "FirstName": "Anna", "LastName": "Smith", "BirthDate": "08/04/2001"},
-        {"UserID":"3", "FirstName": "Peter", "LastName": "Jones", "BirthDate": "08/04/2001"},
+
 	]
 	
 $('#search-input').on('keyup', function(){
@@ -43,7 +42,6 @@ $('#search-input').on('keyup', function(){
 	buildTable(data)
 })
 
-	buildTable(Users)
 
 $('th').on('click',function(){
 	var column = $(this).data('column')
@@ -81,7 +79,6 @@ function searchTable(value,data){
 
 function buildTable(data){
 	var table = document.getElementById('myTable')
-
 	table.innerHTML = ''
 	for (var i = 0; i < data.length; i++){
 		var row = `<tr>
@@ -89,6 +86,7 @@ function buildTable(data){
 						<td>${data[i].FirstName}</td>
 						<td>${data[i].LastName}</td>
 						<td>${data[i].BirthDate}</td>
+						<td>${data[i].Waiver}</td>
 					</tr>`
 		table.innerHTML += row
 
@@ -96,4 +94,19 @@ function buildTable(data){
 		}
 	}
 
+function add(FirstName, LastName, BirthDate, Waiver){
+		var UserID = Users.length +1
+		Users.push({"UserID":UserID , "FirstName":FirstName, "LastName":LastName, "BirthDate":BirthDate ,"Waiver":Waiver});
+	}
+
+
+add("John", "Doe","08/04/2001", "No")
+add('yahya', 'almalallah', '01/02/1998', "Yes")
+add('Anna', 'smith', '08/05/2001', 'No')
+add('Hasan', 'Almualim', '02/08/2000', "Yes")
+add("Peter", "Jones","05/04/2001","No")
+
+
+
+buildTable(Users)
 </script>
