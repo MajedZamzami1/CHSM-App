@@ -1,0 +1,99 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+    th{ 
+        color:rgb(255, 255, 255);
+            }
+</style>
+
+<div class = "row">
+	<div class = "col">
+		<div class = "card card-body">
+			<input id = "search-input" class] form-control" type="text">
+		</div>
+	</div>	
+</div>
+
+<table class="table table-striped">
+    <tr  class="bg-info">
+    	<th data-column="UserID" data-order="desc">ID &#9650</th>
+        <th data-column="FirstName" data-order="desc">FirstName &#9650</th>
+        <th data-column="LastName" data-order="desc">LastName &#9650</th>
+        <th data-column="BirthDate" data-order="desc">BirthDate &#9650</th>
+    </tr>
+
+    <tbody id="myTable">
+        
+    </tbody>
+</table>
+
+<script>
+	var Users = [
+        {"UserID":"1", "FirstName": "John", "LastName": "Doe", "BirthDate": "08/04/2001"},
+        {"UserID":"2", "FirstName": "Anna", "LastName": "Smith", "BirthDate": "08/04/2001"},
+        {"UserID":"3", "FirstName": "Peter", "LastName": "Jones", "BirthDate": "08/04/2001"},
+	]
+	
+$('#search-input').on('keyup', function(){
+	var value = $(this).val().toLowerCase()
+	console.log('value:',value)
+	var data = searchTable(value,Users)
+	buildTable(data)
+})
+
+	buildTable(Users)
+
+$('th').on('click',function(){
+	var column = $(this).data('column')
+	var order = $(this).data('order')
+	var text = $(this).html()
+	text = text.substring(0,text.length - 1)
+	console.log('Column was clicked!' , column , order)
+
+	if(order == 'desc'){
+		$(this).data('order', 'asc')
+		Users = Users.sort((a,b) => a[column] > b[column] ? 1 : -1)
+		text += '&#9660'
+	}else{
+		$(this).data('order', 'desc')
+		Users = Users.sort((a,b) => a[column] < b[column] ? 1 : -1)
+		text += '&#9650'
+	}
+	$(this).html(text)
+	buildTable(Users)
+})
+
+
+function searchTable(value,data){
+	var filteredData = []
+	
+	for (var i = 0; i < data.length; i++){
+		var name = data[i].FirstName.toLowerCase()
+
+		if (name.includes(value)){
+			filteredData.push(data[i])
+		}
+	}
+	return filteredData
+}
+
+function buildTable(data){
+	var table = document.getElementById('myTable')
+
+	table.innerHTML = ''
+	for (var i = 0; i < data.length; i++){
+		var row = `<tr>
+						<td>${data[i].UserID}</td>
+						<td>${data[i].FirstName}</td>
+						<td>${data[i].LastName}</td>
+						<td>${data[i].BirthDate}</td>
+					</tr>`
+		table.innerHTML += row
+
+
+		}
+	}
+
+</script>
