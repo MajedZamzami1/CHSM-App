@@ -1,16 +1,67 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com"> 
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+        
+        <style>
+            body {
+                background-color: thistle;
+            }
 
+            table {
+                margin-right: auto;
+                margin-left: auto;
+            }
+
+            td {
+                font-family: 'Roboto Condensed', sans-serif;
+                padding: 4px 4px;
+            }
+
+            #submit-row td {
+                text-align: center;
+            }
+
+            #submit-row input {
+                font-family: 'Roboto Condensed', sans-serif;
+                background: #FCFCFC;
+            }
+        </style>
     </head>
     <body>
         <form>
-            <label for="firstname">First Name:</label>
-            <input type="text"><br>
-            <label for="lastname">Last Name:</label>
-            <input type="text"><br>
-            <label for="dob">Date of Birth:</label>
-            <input type="date">
+            <table>
+                <tr>
+                    <td><label for="firstname">First Name:</label></td>
+                    <td><input type="text" id="firstname" name="firstname"><br></td>
+                </tr>
+                <tr>
+                    <td><label for="lastname">Last Name:</label></td>
+                    <td><input type="text" id="lastname" name="lastname"><br></td>
+                </tr>
+                <tr>
+                    <td><label for="dob">Date of Birth:</label></td>
+                    <td><input type="date" id="dob" name="dob"><br></td>
+                </tr>
+                <tr>
+                    <td>Pickup Location:</td>
+                    <td>Lorem Ipsum</td>
+                </tr>
+                <tr>
+                    <td>Pickup Time:</td>
+                    <td>
+                        <select>
+                            <option value="8:30">8:30</option>
+                            <option value="9:15">9:15</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr id='submit-row'>
+                    <td colspan="2"><input type="submit" value="Submit"></td>
+                </tr>
+            </table>
         </form>
     </body>
 </html>
