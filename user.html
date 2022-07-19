@@ -7,7 +7,7 @@
         
         <style>
             body {
-                background-color: thistle;
+                background-color: #A5C9CA;
             }
 
             table {
@@ -15,7 +15,7 @@
                 margin-left: auto;
             }
 
-            td {
+            th, td {
                 font-family: 'Roboto Condensed', sans-serif;
                 padding: 4px 4px;
             }
@@ -31,15 +31,18 @@
         </style>
     </head>
     <body>
-        <form>
+        <form id="user-form">
             <table>
                 <tr>
+                    <th colspan="2">Please fill out this form:</th>
+                </tr>
+                <tr>
                     <td><label for="firstname">First Name:</label></td>
-                    <td><input type="text" id="firstname" name="firstname"><br></td>
+                    <td><input type="text" id="firstname" name="firstname" placeholder="Mohammed"><br></td>
                 </tr>
                 <tr>
                     <td><label for="lastname">Last Name:</label></td>
-                    <td><input type="text" id="lastname" name="lastname"><br></td>
+                    <td><input type="text" id="lastname" name="lastname" placeholder="Alwosaibi"><br></td>
                 </tr>
                 <tr>
                     <td><label for="dob">Date of Birth:</label></td>
@@ -53,16 +56,16 @@
                     <td>Pickup Time:</td>
                     <td>
                         <select>
-                            <option value="8:30">08:30</option>
-                            <option value="9:15">09:15</option>
-                            <option value="9:15">10:00</option>
-                            <option value="9:15">10:45</option>
-                            <option value="9:15">11:30</option>
-                            <option value="9:15">12:15</option>
-                            <option value="9:15">01:00</option>
-                            <option value="9:15">01:45</option>
-                            <option value="9:15">02:30</option>
-                            <option value="9:15">03:15</option>
+                            <option value="08:30">08:30</option>
+                            <option value="09:15">09:15</option>
+                            <option value="10:00">10:00</option>
+                            <option value="10:45">10:45</option>
+                            <option value="11:30">11:30</option>
+                            <option value="12:15">12:15</option>
+                            <option value="01:00">01:00</option>
+                            <option value="01:45">01:45</option>
+                            <option value="02:30">02:30</option>
+                            <option value="03:15">03:15</option>
                         </select>
                     </td>
                 </tr>
