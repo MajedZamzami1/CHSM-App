@@ -1,0 +1,34 @@
+{
+    "Raiders" : [
+      {
+        "Name": "Robert",
+        "Surname": "Schwartz",
+        "BirthDate": "08/04/2001"
+      },
+      {
+        "Name": "Lucy",
+        "Surname": "Ballmer",
+        "BirthDate": "08/04/2001"
+      },
+      {
+        "Name": "Anna",
+        "Surname": "Smith",
+        "BirthDate": "08/05/2001"
+      },
+      {
+        "Name": "Robert",
+        "Surname": "Brown",
+        "BirthDate": "08/04/2001"
+      },
+      {
+        "Name": "Roger",
+        "Surname": "Bacon",
+        "BirthDate": "08/04/2001"
+      },
+      {
+        "Name": "Roger",
+        "Surname": "Bacon",
+        "BirthDate": "08/06/2001"
+      }
+    ]
+  }
