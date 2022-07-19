@@ -6,9 +6,48 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
         
         <style>
-            body {
-                background-color: #A5C9CA;
+            nav {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            flex-wrap: wrap;
+            background-color: rgb(255, 115, 0);
+            font-size: 20;
+            color: white;
+            font-family: sans-serif;
             }
+            nav ul{
+            flex: 1;
+            text-align: right;
+            padding-right: 30px;
+        }
+        nav ul li{
+            display: inline-block;
+            list-style: none;
+            margin: 10px 20px;
+        
+        }
+        
+        nav ul li a{
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            position: relative;
+        }
+        nav ul li a::after{
+            content: '';
+            width:0;
+            height: 3px;
+            position: absolute;
+            bottom: -5px;
+            left:50%;
+            transform: translateX(-50%);
+            background: rgb(255, 255, 255);
+            transition: width 0.3s;
+        }
+        nav ul li a:hover::after{
+            width:50%;
+        
+        }
 
             table {
                 margin-right: auto;
@@ -28,9 +67,35 @@
                 font-family: 'Roboto Condensed', sans-serif;
                 background: #FCFCFC;
             }
+            .orange 
+        {
+            
+            background-color: rgb(253, 253, 253);
+            padding: 8px;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto Condensed';
+        }
         </style>
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="home.html">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarText">
+              <ul class="navbar-nav mr-auto">
+               <li class="nav-item">
+                  <a class="nav-link" style="color: white;"  href="home.html">Home</a>
+                </li>
+                
+            </div>
+          </nav>
+          <div class="orange"><h1> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/University_of_Texas_at_Austin_logo.svg/1280px-University_of_Texas_at_Austin_logo.svg.png" alt="" width="200"></h1></div>
+        
+              
         <form id="user-form">
             <table>
                 <tr>
