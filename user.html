@@ -6,49 +6,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
         
         <style>
-            nav {
-            display: flex;
-            width: 100%;
-            align-items: center;
-            flex-wrap: wrap;
-            background-color: rgb(255, 115, 0);
-            font-size: 20;
-            color: white;
-            font-family: sans-serif;
-            }
-            nav ul{
-            flex: 1;
-            text-align: right;
-            padding-right: 30px;
-        }
-        nav ul li{
-            display: inline-block;
-            list-style: none;
-            margin: 10px 20px;
-        
-        }
-        
-        nav ul li a{
-            color: rgb(255, 255, 255);
-            text-decoration: none;
-            position: relative;
-        }
-        nav ul li a::after{
-            content: '';
-            width:0;
-            height: 3px;
-            position: absolute;
-            bottom: -5px;
-            left:50%;
-            transform: translateX(-50%);
-            background: rgb(255, 255, 255);
-            transition: width 0.3s;
-        }
-        nav ul li a:hover::after{
-            width:50%;
-        
-        }
-
             table {
                 margin-right: auto;
                 margin-left: auto;
@@ -67,35 +24,10 @@
                 font-family: 'Roboto Condensed', sans-serif;
                 background: #FCFCFC;
             }
-            .orange 
-        {
-            
-            background-color: rgb(253, 253, 253);
-            padding: 8px;
-        }
-        *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto Condensed';
-        }
         </style>
     </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="home.html">
-            </a>
-            <div class="collapse navbar-collapse" id="navbarText">
-              <ul class="navbar-nav mr-auto">
-               <li class="nav-item">
-                  <a class="nav-link" style="color: white;"  href="home.html">Home</a>
-                </li>
-                
-            </div>
-          </nav>
-          <div class="orange"><h1> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/University_of_Texas_at_Austin_logo.svg/1280px-University_of_Texas_at_Austin_logo.svg.png" alt="" width="200"></h1></div>
-        
-              
+
+    <body>      
         <form id="user-form">
             <table>
                 <tr>
@@ -103,11 +35,11 @@
                 </tr>
                 <tr>
                     <td><label for="firstname">First Name:</label></td>
-                    <td><input type="text" id="firstname" name="firstname" placeholder="Mohammed"><br></td>
+                    <td><input type="text" id="firstname" name="firstname" placeholder="John"><br></td>
                 </tr>
                 <tr>
                     <td><label for="lastname">Last Name:</label></td>
-                    <td><input type="text" id="lastname" name="lastname" placeholder="Alwosaibi"><br></td>
+                    <td><input type="text" id="lastname" name="lastname" placeholder="Doe"><br></td>
                 </tr>
                 <tr>
                     <td><label for="dob">Date of Birth:</label></td>
@@ -131,25 +63,53 @@
                             <option value="01:45">01:45</option>
                             <option value="02:30">02:30</option>
                             <option value="03:15">03:15</option>
+                            <option value="04:00">04:00</option>
                         </select>
                     </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th colspan="4"><label for="riders">Riders (optional):</label></th>
                 </tr>
                 <tr>
-                    <td>Passengers:</td>
-                    <td>
-                        <select>
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
-                    </td>
+                    <td style="text-align: center;">First Name:</td>
+                    <td style="text-align: center;">Last Name:</td>
+                    <td style="text-align: center;">Date of Birth:</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"><input type="text" id="riders-fname-input" name="riders" placeholder="John"></td>
+                    <td style="text-align: center;"><input type="text" id="riders-lname-input" name="riders" placeholder="Doe"></td>
+                    <td style="text-align: center;"><input type="date" id="riders-dob-input" name="riders"></td>
+                    <td style="text-align: center;"><input type="button" id="add-button" value="Add"></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><ul id="riders-list"></ul></td>
                 </tr>
                 <tr id='submit-row'>
-                    <td colspan="2"><input type="submit" value="Submit"></td>
+                    <td colspan="4"><input type="submit" value="Submit"></td>
                 </tr>
             </table>
         </form>
+        <script>
+            document.getElementById('add-button').onclick = function() {
+                var ul = document.getElementById('riders-list');
+                var li = document.createElement('li');
+                var fnameInput = document.getElementById('riders-fname-input')
+                var lnameInput = document.getElementById('riders-lname-input')
+                var dobInput = document.getElementById('riders-dob-input')
+                if (ul.getElementsByTagName('li').length < 7) {
+                    if (fnameInput.value != '' && lnameInput.value != '' && dobInput.value != '') {
+                        li.innerHTML = fnameInput.value + ' ' + lnameInput.value + ' (' + dobInput.value + ')'
+                        fnameInput.value = ''
+                        lnameInput.value = ''
+                        dobInput.value = ''
+                        ul.appendChild(li)
+                    }
+                } else {
+                    alert('Maximum number of riders reached!')
+                }
+            }
+        </script>
     </body>
 </html>
