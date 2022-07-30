@@ -9,25 +9,25 @@
    crossorigin=""></script>
 
    <style>
-    #map { height: 1080px; }
+    #map { height: 1080px; width: 1920;}
     </style>
 </head>
     <body>
-
         <div id="map"></div>
-
-        <script>
+             <script>
 
         var countMarkers = false;
         var tripsLst = {};
         var popup = L.popup();
-
+        
+        
+        
+        
         var map = L.map('map').setView([30.351815, -97.700188], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap'
             }).addTo(map);
-        
         
 
         var goergianAcres = L.polygon([[30.339410441869536, -97.70027080476106],
@@ -35,21 +35,47 @@
             [30.363198989985634, -97.69709275248165],
             [30.348226383043677, -97.71320677205651]
                 ]).addTo(map);
-
-
+        
         function lstRiders(trvlNum,rider){
             if (rider != null && trvlNum != 0 && trvlNum != null)
                 tripsLst[trvlNum] = rider;
             }
+
         function showlocations(){
-            for (trvlNum in tripsLst){
-               var tempLocation = tripsLst[trvlNum][Location]
-                if (tempLocation != null) tempLoction.addTo(map);
+            var keys= Object.keys(tripsLst);
+            for(var i = 0; i < keys.length; i++){
+              var marker =  tripsLst[keys[i]]["Location"];
+              marker.addTo(map).on('click', function(e) {
+
+                var latDes = marker.getLatLng().lat;
+                var longDes = marker.getLatLng().lng;
+                
+                navigator.geolocation.getCurrentPosition(function(location) {    
+                    var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
+                    var curLat = latlng.lat;
+                    var curLng = latlng.lng;
+                    var url = "https://www.google.com/maps/dir/?api=1&";
+                    var origin = "origin=" +  curLat + "," + curLng;
+                    var destination = "&destination=" + latDes + "," + longDes;
+                    var newUrl = new URL(url + origin + destination);
+                    
+                var win = window.open(newUrl, '_blank');
+                win.focus();
+            
+                            });
+                        });
+
+                marker.bindPopup("Popup content");
+                marker.on('mouseover', function (e) {
+                this.openPopup();
+                        });
+                marker.on('mouseout', function (e) {
+                    this.closePopup();
+                        });  
+                    }; 
             }
-
-        }
-        
-
+            
+            
         function checkArea(marker, poly){
             
             var inside = false;
@@ -76,10 +102,41 @@
             if (makrer != null && countMarkers == true)
                 return marker;
              }
-        
-        var rider = {Location:L.marker([31,-97])}
+
+        function endRide(tripNum){
+            tripsLst[tripNum]["Location"].remove();
+            delete tripsLst[tripNum];
+        }
+        function onLocationFound(e) {
+            var radius = e.accuracy;
+
+        L.marker(e.latlng).addTo(map).bindPopup("You are within " + radius + " meters from this point").openPopup();
+        L.circle(e.latlng, radius).addTo(map);
+            }
+
+
+
+            function onLocationError(e) {
+                alert('Location not found, try to  turn on "finding location".');
+                    }               
+
+
+  
+
+
+        var marker2 = L.marker([30.34, -97.7]);
+        var rider2 = {"Location": marker2};
+        lstRiders(2, rider2)
+        var marker = L.marker([30.35, -97.7]);
+        var rider = {"Location": marker};
+
         lstRiders(1, rider)
         showlocations()
+
+        map.on('locationerror', onLocationError);
+        map.on('locationfound', onLocationFound);
+        map.locate({setView: true, watch: false, maxZoom: 13});
+
         </script>
     </body>
 </html>
