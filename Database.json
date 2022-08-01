@@ -1,1 +1,1 @@
-{"riders": [{"id": "ja2508", "name": "JOHN", "surname": "Al Malallah", "birthdate": "08-04-2001", "trip": "SV1127", "location": "Tucson, Arizona", "waiver": "false"}, {"id": "ja3068", "name": "JOHN", "surname": "Al Malallah", "birthdate": "08-04-2001", "trip": "SV112", "location": "Tucson, Arizona", "waiver": "false"}], "trips": [{"SV1127": ["ja2508"], "SV112": ["ja3068"]}]}
+{"riders": [], "trips": [{}]}
