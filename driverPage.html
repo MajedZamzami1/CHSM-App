@@ -1,0 +1,84 @@
+<html>
+<head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="database.json"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+    th{ 
+        color:rgb(255, 255, 255);
+            }
+</style>
+
+<div class = "row">
+	<div class = "col">
+		<div class = "card card-body">
+			<input id = "search-input" class] form-control" type="text">
+		</div>
+	</div>	
+</div>
+
+<table class="table table-striped">
+    <tr  class="bg-info">
+		<th data-column="id" data-order="desc">ID </th>
+        <th data-column="name" data-order="desc">Name </th>
+        <th data-column="surname" data-order="desc">Surname </th>
+        <th data-column="birthdate" data-order="desc">BirthDate </th>
+		<th data-column="trip" data-order="desc">Trip </th>
+		<th data-column="location" data-order="desc">Locaiton </th>
+		<th data-column="waiver" data-order="desc">Waiver </th>
+    </tr>
+    <tbody id="myTable">
+    </tbody>
+</table>
+<script>
+
+var Users = []
+
+var formData = JSON.stringify($("#Users").serializeArray());
+
+function fetching(){
+fetch("database.json")
+.then(response => {
+   return response.json();
+})
+.then(jsondata => console.log(jsondata))}
+
+const myList = document.querySelector('ul');
+const myRequest = new Request('database.json');
+var trip = 'SV1127';
+fetch(myRequest)
+  .then(response => response.json())
+  .then(data => {
+    for (const Rider of data.riders) {
+		if (Rider.trip == trip){
+	  Users.push({"id":Rider.id, "name":Rider.name, "surname":Rider.surname, "birthdate": Rider.birthdate, "trip":Rider.trip, "location":Rider.location,"waiver":Rider.waiver})
+		}}
+	JSON.stringify(Users)
+	buildTable(Users)
+  })
+  .catch(console.error);
+
+console.log(Users)
+
+function buildTable(data){
+	var table = document.getElementById('myTable')
+	table.innerHTML = ''
+	for (var i = 0; i < data.length; i++){
+		var row = `<tr>
+						<td>${data[i].id}</td>
+						<td>${data[i].name}</td>
+						<td>${data[i].surname}</td>
+						<td>${data[i].birthdate}</td>
+						<td>${data[i].trip}</td>
+						<td>${data[i].location}</td>
+						<td>${data[i].waiver}</td>
+					</tr>`
+		table.innerHTML += row
+		}
+	}
+
+</script>
+</head>
+</html>
