@@ -51,7 +51,7 @@ fetch(myRequest)
   .then(response => response.json())
   .then(data => {
     for (const Rider of data.riders) {
-	  Users.push({"id":Rider.id, "name":Rider.name, "surname":Rider.surname, "birthdate": Rider.birthdate, "trip":[Rider.trip], "location":Rider.location,"waiver":Rider.waiver})
+	  Users.push({"id":Rider.id, "name":Rider.name, "surname":Rider.surname, "birthdate": Rider.birthdate, "trip":trip.trip, "location":trip.location,"waiver":Rider.waiver})
 		}
 	JSON.stringify(Users)
 	buildTable(Users)

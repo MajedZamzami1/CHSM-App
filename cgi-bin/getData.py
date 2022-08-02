@@ -57,16 +57,17 @@ def add():
     )
 
     # Update trips list in the database
+    temp = False
     for trip in json_data['trips']:
-        temp_location = False
         if D['trip'] in trip.keys():
-            for u in D['trip']:
-                if u[0] == D['id']:
-                    u[1] = D['location']
-                    temp_location = True
-        if temp_location == False:
+            for t in trip[D['trip']]:
+                if t[0] == D['id']:
+                    temp = True
+            if temp == False:
+                trip[D['trip']].append([D['id'] , D['location']])
+        else:
             trip[D['trip']] = [[D['id'] , D['location']]]
-
+    
     # Write local dict (edited) back to json file.
     with open(filename, "w") as json_file:
         json_data = json.dumps(json_data)
