@@ -74,27 +74,39 @@
                         </select>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <input type="radio" id="today" name="date">
+                        <label for="today">Today</label>
+                    </td>
+                    <td>
+                        <input type="radio" id="tomorrow" name="date">
+                        <label for="tomorrow">Tomorrow</label>
+                    </td>
+                </tr>
             </table>
             <table>
                 <tr>
-                    <th colspan="4"><label for="riders">Riders (optional):</label></th>
+                    <th colspan="5"><label for="riders">Additional Riders (optional):</label></th>
                 </tr>
                 <tr>
+                    <td style="text-align: center;">ID:</td>
                     <td style="text-align: center;">First Name:</td>
                     <td style="text-align: center;">Last Name:</td>
                     <td style="text-align: center;">Date of Birth:</td>
                 </tr>
                 <tr>
-                    <td style="text-align: center;"><input type="text" id="riders-fname-input" name="riders" placeholder="John"></td>
-                    <td style="text-align: center;"><input type="text" id="riders-lname-input" name="riders" placeholder="Doe"></td>
-                    <td style="text-align: center;"><input type="date" id="riders-dob-input" name="riders"></td>
+                    <td style="text-align: center;"><input type="text" id="riders-id-input" placeholder="jd1234"></td>
+                    <td style="text-align: center;"><input type="text" id="riders-fname-input" placeholder="John"></td>
+                    <td style="text-align: center;"><input type="text" id="riders-lname-input" placeholder="Doe"></td>
+                    <td style="text-align: center;"><input type="date" id="riders-dob-input"></td>
                     <td style="text-align: center;"><input type="button" id="add-button" value="Add"></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><ul id="riders-list"></ul></td>
+                    <td colspan="5"><ul id="riders-list"></ul></td>
                 </tr>
                 <tr id='submit-row'>
-                    <td colspan="4"><input type="submit" onclick=submitData() value="Submit"></td>
+                    <td colspan="5"><input type="submit" value="Submit"></td>
                 </tr>
             </table>
         </form>
@@ -106,12 +118,13 @@
             document.getElementById('add-button').onclick = function() {
                 var ul = document.getElementById('riders-list');
                 var li = document.createElement('li');
+                var idInput = document.getElementById('riders-id-input')
                 var fnameInput = document.getElementById('riders-fname-input')
                 var lnameInput = document.getElementById('riders-lname-input')
                 var dobInput = document.getElementById('riders-dob-input')
-                if (ul.getElementsByTagName('li').length < 7) {
+                if (ul.getElementsByTagName('li').length < 2) {
                     if (fnameInput.value != '' && lnameInput.value != '' && dobInput.value != '') {
-                        li.innerHTML = fnameInput.value + ' ' + lnameInput.value + ' (' + dobInput.value + ')'
+                        li.innerHTML = fnameInput.value + ' ' + lnameInput.value + ' (' + dobInput.value + ') - ' + idInput.value
                         fnameInput.value = ''
                         lnameInput.value = ''
                         dobInput.value = ''
