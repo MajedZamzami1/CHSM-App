@@ -1,78 +1,100 @@
+<!DOCTYPE html>
 <html>
-
 <head>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-    crossorigin=""/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
 
-    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-   integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-   crossorigin=""></script>
-   
-</head>
+  <style>
+      table {
+          margin-right: auto;
+          margin-left: auto;
+      }
 
-<style>
-    #map { height: 480px; }
-</style>
+      th, td {
+          font-family: 'Roboto Condensed', sans-serif;
+          padding: 4px 4px;
+      }
 
-<body>
-    Hello Worlddsds
-    Testing1
+      #submit-row td {
+          text-align: center;
+      }
 
-    <div id="map"></div>
+      #submit-row input {
+          font-family: 'Roboto Condensed', sans-serif;
+          background: #FCFCFC;
+      }
+  </style>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>User Form</title>
+  </head>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <script>
-        var map = L.map('map').setView([30.285388, -97.740658], 13);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap'
-            }).addTo(map);
-
-        var marker = L.marker([30.285388, -97.740658]).addTo(map);
-
-        var polygon = L.polygon([[30.339410441869536, -97.70027080476106],
-            [30.35833211360448, -97.68806220171041],
-            [30.363198989985634, -97.69709275248165],
-            [30.348226383043677, -97.71320677205651]
-                ]).addTo(map);
-
-                var popup = L.popup();
-
-        function onMapClick(e) {
-                 marker.setLatLng(e.latlng);
-                 popup.setLatLng(e.latlng).setContent("Your pick up location ").openOn(map);
-                      
-
-            map.on('click', onMapClick);
-                }
-                 map.on('click', onMapClick);
-        function checkArea(mark, polygon,latlng){
-            
-
+  <body>
+    <form id="user-form">
+      <table>
+      <tr>
+        <th colspan="2">Please fill out this form:</th>
+      </tr>
+      <tr>
+        <td><label for="id">ID:</label></td>
+        <td><input type="text" id="id" name="id" placeholder="jd1234"><br></td>
+      </tr>
+      <tr>
+        <td><label for="name">First Name:</label></td>
+        <td><input type="text" id="name" name="name" placeholder="John"><br></td>
+      </tr>
+      <tr>
+        <td><label for="surname">Last Name:</label></td>
+        <td><input type="text" id="surname" name="surname" placeholder="Doe"><br></td>
+      </tr>
+      <tr>
+        <td><label for="dob">Date of Birth:</label></td>
+        <td><input type="date" id="birthdate" name="birthdate"><br></td>
+      </tr>
+      <tr>
+        <td><label for="trip">Trip:</label></td>
+        <td><input type="text" id="trip" name="trip"><br></td>
+      </tr>
+      <tr>
+        <td><label for="location">Location:</label></td>
+        <td><input type="text" id="location" name="location"><br></td>
+      </tr>
+      <tr id ='submit-row'>
+      <td colspan="4"><input type="button" id="submit"  onclick=submitData() value="Submit"></td>
+    </tr>
+  </table>
+    </form>
+    <script type = 'text/javascript'>
+      function submitData(){
+        var id = $('#id').val();
+        var name = $('#name').val();
+        var surname = $('#surname').val();
+        var birthdate = $('#birthdate').val();
+        var trip = $('#trip').val();
+        var location = $('#location').val();
+        if (id == '')
+        {
+        var val = Math.floor(1000 + Math.random() * 9000);
+        var id = name[0].toLowerCase() + surname[0].toLowerCase() + val;
+        var waiver = false
         }
+        else{
+          var waiver = true
+        }
+        toString(id)
+        birthdate = birthdate.replaceAll('/', '-')
+        url = 'http://127.0.0.1:8000/cgi-bin/getData.py?' + '&id=' + id + '&name='+name + '&surname='+surname + '&birthdate='+birthdate + '&trip='+trip + '&location='+location  + '&waiver=' + waiver
 
+      fetch(url)
+        .then(data => {
+          return data.json();
+        }).then(json => { 
+        console.log(json['status']);
+      });
+
+      console.log("hi")
+      }
     </script>
-</body>
-
-
+  </body>
 </html>
