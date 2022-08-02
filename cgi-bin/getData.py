@@ -46,17 +46,26 @@ def add():
         json_data = json.load(json_file)
 
     # Add riders to the database
-    json_data["riders"].append(
-        {"id": D["id"], "name": D["name"], "surname": D["surname"], "birthdate": D["birthdate"], "trip": D["trip"], "location" : D['location'], 'waiver': D['waiver']}
+    user = {"id": D["id"], "name": D["name"], "surname": D["surname"], "birthdate": D["birthdate"], 'waiver': D['waiver']}
+    temp_rider = False
+    for rider in json_data["riders"]:
+        if rider['id'] == user['id']:
+            temp_rider = True
+    if temp_rider == False:
+        json_data["riders"].append(
+            user
     )
 
     # Update trips list in the database
     for trip in json_data['trips']:
+        temp_location = False
         if D['trip'] in trip.keys():
-            trip[D['trip']].append(D['id'])
-        else:
-
-            trip[D['trip']] = [D['id']]
+            for u in D['trip']:
+                if u[0] == D['id']:
+                    u[1] = D['location']
+                    temp_location = True
+        if temp_location == False:
+            trip[D['trip']] = [[D['id'] , D['location']]]
 
     # Write local dict (edited) back to json file.
     with open(filename, "w") as json_file:

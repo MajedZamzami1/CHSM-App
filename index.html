@@ -1,55 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+
+  <style>
+      table {
+          margin-right: auto;
+          margin-left: auto;
+      }
+
+      th, td {
+          font-family: 'Roboto Condensed', sans-serif;
+          padding: 4px 4px;
+      }
+
+      #submit-row td {
+          text-align: center;
+      }
+
+      #submit-row input {
+          font-family: 'Roboto Condensed', sans-serif;
+          background: #FCFCFC;
+      }
+  </style>
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Form</title> 
-</head>
-<body>
+  <title>User Form</title>
+  </head>
+
+  <body>
+    <form id="user-form">
+      <table>
+      <tr>
+        <th colspan="2">Please fill out this form:</th>
+      </tr>
+      <tr>
+        <td><label for="id">ID:</label></td>
+        <td><input type="text" id="id" name="id" placeholder="jd1234"><br></td>
+      </tr>
+      <tr>
+        <td><label for="name">First Name:</label></td>
+        <td><input type="text" id="name" name="name" placeholder="John"><br></td>
+      </tr>
+      <tr>
+        <td><label for="surname">Last Name:</label></td>
+        <td><input type="text" id="surname" name="surname" placeholder="Doe"><br></td>
+      </tr>
+      <tr>
+        <td><label for="dob">Date of Birth:</label></td>
+        <td><input type="date" id="birthdate" name="birthdate"><br></td>
+      </tr>
+      <tr>
+        <td><label for="trip">Trip:</label></td>
+        <td><input type="text" id="trip" name="trip"><br></td>
+      </tr>
+      <tr>
+        <td><label for="location">Location:</label></td>
+        <td><input type="text" id="location" name="location"><br></td>
+      </tr>
+      <tr id ='submit-row'>
+      <td colspan="4"><input type="button" id="submit"  onclick=submitData() value="Submit"></td>
+    </tr>
+  </table>
+    </form>
     <script type = 'text/javascript'>
-      // var browserify = require('browserify');
+      function submitData(){
+        var id = $('#id').val();
+        var name = $('#name').val();
+        var surname = $('#surname').val();
+        var birthdate = $('#birthdate').val();
+        var trip = $('#trip').val();
+        var location = $('#location').val();
+        if (id == '')
+        {
+        var val = Math.floor(1000 + Math.random() * 9000);
+        var id = name[0].toLowerCase() + surname[0].toLowerCase() + val;
+        var waiver = false
+        }
+        else{
+          var waiver = true
+        }
+        toString(id)
+        birthdate = birthdate.replaceAll('/', '-')
+        url = 'http://127.0.0.1:8000/cgi-bin/getData.py?' + '&id=' + id + '&name='+name + '&surname='+surname + '&birthdate='+birthdate + '&trip='+trip + '&location='+location  + '&waiver=' + waiver
 
+      fetch(url)
+        .then(data => {
+          return data.json();
+        }).then(json => { 
+        console.log(json['status']);
+      });
 
-function submitData(){
-  var id = $('#id').val();
-  var name = $('#name').val();
-  var surname = $('#surname').val();
-  var birthdate = $('#birthdate').val();
-  var trip = $('#trip').val();
-  var location = $('#location').val();
-  if (id == '')
-  {
-  var val = Math.floor(1000 + Math.random() * 9000);
-	var id = name[0].toLowerCase() + surname[0].toLowerCase() + val;
-  var waiver = false
-  }
-  else{
-    var waiver = true
-  }
-  toString(id)
-  birthdate = birthdate.replaceAll('/', '-')
-  url = 'http://127.0.0.1:8000/cgi-bin/getData.py?' + '&id=' + id + '&name='+name + '&surname='+surname + '&birthdate='+birthdate + '&trip='+trip + '&location='+location  + '&waiver=' + waiver
-
-fetch(url)
-  .then(data => {
-    return data.json();
-  }).then(json => { 
-   console.log(json['status']);
-});
-
-console.log("hi")
-}
-</script>
-  <h1>Form</h1>
-<form>
-  ID:<br><input type="text" name="id" id="id" required maxlength="6"><br><br>
-  Name: <br><input type="text" name="name" id="name" required maxlength="40" required><br><br>
-  Surname:<br><input type="text" name="surname" id="surname" required maxlength="40" required><br><br>
-  Date of Birth:<br> <input type="birthdate" name="birthdate" id="birthdate" required><br><br>
-  Trip:<br> <input type="trip" name="trip" id="trip" required><br><br>
-  Location:<br> <input type="location" name="location" id="location" required><br><br>
-  <input type="button" id="submit"  onclick=submitData() value="Submit">
-</form>
-</body>
+      console.log("hi")
+      }
+    </script>
+  </body>
 </html>

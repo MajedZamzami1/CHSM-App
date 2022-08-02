@@ -47,14 +47,12 @@ fetch("database.json")
 
 const myList = document.querySelector('ul');
 const myRequest = new Request('database.json');
-var trip = 'SV1127';
 fetch(myRequest)
   .then(response => response.json())
   .then(data => {
     for (const Rider of data.riders) {
-		if (Rider.trip == trip){
-	  Users.push({"id":Rider.id, "name":Rider.name, "surname":Rider.surname, "birthdate": Rider.birthdate, "trip":Rider.trip, "location":Rider.location,"waiver":Rider.waiver})
-		}}
+	  Users.push({"id":Rider.id, "name":Rider.name, "surname":Rider.surname, "birthdate": Rider.birthdate, "trip":[Rider.trip], "location":Rider.location,"waiver":Rider.waiver})
+		}
 	JSON.stringify(Users)
 	buildTable(Users)
   })
