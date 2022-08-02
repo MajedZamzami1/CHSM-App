@@ -1,8 +1,7 @@
 <html>
-<head>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="database.json"></script>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<script src="database.json"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 <style>
@@ -26,7 +25,7 @@
         <th data-column="surname" data-order="desc">Surname </th>
         <th data-column="birthdate" data-order="desc">BirthDate </th>
 		<th data-column="trip" data-order="desc">Trip </th>
-		<th data-column="location" data-order="desc">Locaiton </th>
+		<th data-column="location" data-order="desc">Picked up By </th>
 		<th data-column="waiver" data-order="desc">Waiver </th>
     </tr>
     <tbody id="myTable">
@@ -73,26 +72,25 @@ function buildTable(data){
 						<td>${data[i].location}</td>
 						<td>${data[i].waiver}</td>
 					</tr>`
-		table.innerHTML += row
+		table.innerHTML += row;
+        var rider = {"ID": data[i].id, "Name": data[i].name, "Surname": data[i].surname, "Birthday": data[i].birthdate, "Location": data[i].location, "Waiver": data[i].waiver};
+        tripsLst[trip] = rider;
 		}
 	}
 
 </script>
 </head>
-</html>
 
-<html>
     <head>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+   		 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
     integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
     crossorigin=""/>
 
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
    crossorigin=""></script>
-
-   <style>
-    #map { height: 1080px; width: 1920;}
+		<style>
+    #map { height: 1080px; width: 1600px ; border: 2px solid black; top: 50; margin-right: auto; margin-left: auto;}
     </style>
 </head>
     <body>
@@ -102,7 +100,14 @@ function buildTable(data){
         var countMarkers = false;
         var tripsLst = {};
         var popup = L.popup();
-        
+        var greenIcon = new L.Icon({
+			iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+			shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+			iconSize: [25, 41],
+			iconAnchor: [12, 41],
+			popupAnchor: [1, -34],
+			shadowSize: [41, 41]
+			});
         
         
         
@@ -193,7 +198,7 @@ function buildTable(data){
         function onLocationFound(e) {
             var radius = e.accuracy;
 
-        L.marker(e.latlng).addTo(map).bindPopup("You are within " + radius + " meters from this point").openPopup();
+        L.marker(e.latlng, {icon: greenIcon}).addTo(map).bindPopup("You are within " + radius + " meters from this point").openPopup();
         L.circle(e.latlng, radius).addTo(map);
             }
 
