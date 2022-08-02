@@ -107,6 +107,10 @@
             tripsLst[tripNum]["Location"].remove();
             delete tripsLst[tripNum];
         }
+        function pickedUp(tripNum){
+            tripsLst[tripNum]["Location"].remove();
+        }
+
         function onLocationFound(e) {
             var radius = e.accuracy;
 
