@@ -47,11 +47,7 @@ def add():
         json_data = json.load(json_file)
     
     #D['_latlng'] is in the form: LatLng(30.351819, -97.700206)
-    latlng = D['_latlng'].replace('LatLng' , '')
-    latlng = latlng.strip('(')
-    latlng = latlng.strip(')')
-    latlng = latlng.split(',')
-    latlng[1] = latlng[1].strip()
+    latlng = D['_latlng'].replace('LatLng' , '').replace('(','').replace(')','').replace(' ','').split(',')
     #resulted form ["30.351819", "-97.700206"]
 
     # Add riders to the database
