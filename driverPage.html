@@ -42,17 +42,18 @@
             
             <table class="table table-striped">
                 <tr  class="bg-info">
-                    <th data-column="id" data-order="desc">ID </th>
-                    <th data-column="name" data-order="desc">Name </th>
-                    <th data-column="surname" data-order="desc">Surname </th>
-                    <th data-column="birthdate" data-order="desc">BirthDate </th>
-                    <th data-column="trip" data-order="desc">Trip </th>
-                    <th data-column="location" data-order="desc">Locaiton </th>
-                    <th data-column="waiver" data-order="desc">Waiver </th>
+                    <th data-column="id">ID </th>
+                    <th data-column="name">Name </th>
+                    <th data-column="surname">Surname </th>
+                    <th data-column="birthdate">BirthDate </th>
+                    <th data-column="trip">Trip </th>
+                    <th data-column="location">Locaiton </th>
+                    <th data-column="waiver">Waiver </th>
                 </tr>
                 <tbody id="myTable">
                 </tbody>
             </table>
+            
 
 
 <script>
@@ -104,9 +105,6 @@ function buildTable(data){
         var countMarkers = false;
         var tripsLst = {};
         var popup = L.popup();
-        
-        
-        
         
         var map = L.map('map').setView([30.351815, -97.700188], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
