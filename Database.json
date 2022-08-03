@@ -1,1 +1,1 @@
-{"riders": [], "trips": [{}]}
+{"riders": [{"id": "ya1234", "name": "Yahya", "surname": "Al Malallah", "birthdate": "2001-08-04", "trip": "SV1127", "location": ["30.351819", "-97.700206"], "waiver": "true"}], "trips": [{"SV1127": [["ya1234", ["30.351819", "-97.700206"]]]}]}
