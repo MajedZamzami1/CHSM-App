@@ -80,10 +80,6 @@ crossorigin=""></script>
             })
             .catch(console.error);
 
-
-                
-                    
-
             function buildTable(data){
                 var table = document.getElementById('myTable')
                 table.innerHTML = ''
@@ -99,9 +95,10 @@ crossorigin=""></script>
                                 </tr>`
                     table.innerHTML += row;
                     var rider = {"ID": data[i].id, "Name": data[i].name, "Surname": data[i].surname, "Birthday": data[i].birthdate, "Location": data[i].location, "Waiver": data[i].waiver};
-                    tripsLst[data[i].trip] = rider;
-                    console.log(tripsLst)
+
+                    tripsLst[data[i].trip + data[i].id] = rider;
                     }
+                    console.log(tripsLst)
                 showlocations();
                 }
 
