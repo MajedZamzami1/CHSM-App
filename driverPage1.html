@@ -31,23 +31,16 @@ crossorigin=""></script>
 
 
 
-<div class = "row">
-	<div class = "col">
-		<div class = "card card-body">
-			<input id = "search-input" class] form-control" type="text">
-		</div>
-	</div>	
-</div>
-
 <table class="table table-light">
     <tr  class="bg-info">
-		<th data-column="id" data-order="desc">ID </th>
-        <th data-column="name" data-order="desc">Name </th>
-        <th data-column="surname" data-order="desc">Surname </th>
-        <th data-column="birthdate" data-order="desc">BirthDate </th>
-		<th data-column="trip" data-order="desc">Trip </th>
-		<th data-column="location" data-order="desc">Picked up By </th>
-		<th data-column="waiver" data-order="desc">Waiver </th>
+		<th data-column="id">ID </th>
+        <th data-column="name">Name </th>
+        <th data-column="surname">Surname </th>
+        <th data-column="birthdate">BirthDate </th>
+        <th data-column="date">Trip Date </th>
+		<th data-column="picked">Picked up  </th>
+		<th data-column="waiver">Waiver </th>
+        <th data-column="location">Location </th>
     </tr>
         <thead id="tableHead"></thead>
     <tbody id="myTable"></tbody>
@@ -73,7 +66,7 @@ crossorigin=""></script>
             .then(response => response.json())
             .then(data => {
                 for (const Rider of data.riders) {
-                Users.push({"id":Rider.id, "name":Rider.name, "surname":Rider.surname, "birthdate": Rider.birthdate, "trip":Rider.trip, "location":Rider.location,"waiver":Rider.waiver})
+                Users.push({"id":Rider.id, "name":Rider.name, "surname":Rider.surname, "birthdate": Rider.birthdate, "date":Rider.date, "picked":Rider.picked,  "waiver":Rider.waiver, "location":Rider.location})
                     }
                 JSON.stringify(Users)
                 buildTable(Users)
@@ -89,14 +82,15 @@ crossorigin=""></script>
                                     <td>${data[i].name}</td>
                                     <td>${data[i].surname}</td>
                                     <td>${data[i].birthdate}</td>
-                                    <td>${data[i].trip}</td>
-                                    <td>${data[i].location}</td>
+                                    <td>${data[i].date}</td>
+                                    <td>${data[i].picked} </td> 
                                     <td>${data[i].waiver}</td>
+                                    <td>${data[i].location}</td>
                                 </tr>`
                     table.innerHTML += row;
-                    var rider = {"ID": data[i].id, "Name": data[i].name, "Surname": data[i].surname, "Birthday": data[i].birthdate, "Location": data[i].location, "Waiver": data[i].waiver};
-
-                    tripsLst[data[i].trip + data[i].id] = rider;
+                    
+                    var rider = {"ID": data[i].id, "Name": data[i].name, "Surname": data[i].surname, "Birthday": data[i].birthdate, "Date": data[i].date, 'Picked':data[i].picked ,"Waiver": data[i].waiver , "Location": data[i].location};
+                    tripsLst[data[i].date + data[i].id] = rider;
                     }
                     console.log(tripsLst)
                 showlocations();
@@ -112,7 +106,6 @@ crossorigin=""></script>
                 shadowSize: [41, 41]
                 });
 
-        
         
         
         

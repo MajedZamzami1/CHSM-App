@@ -51,12 +51,12 @@ def add():
     #resulted form ["30.351819", "-97.700206"]
 
     # Add riders to the database
-    user = {"id": D["id"], "name": D["name"], "surname": D["surname"], "birthdate": D["birthdate"], "trip" : D['trip'] , "location":latlng, 'waiver': D['waiver']}
+    user = {"id": D["id"], "name": D["name"], "surname": D["surname"], "birthdate": D["birthdate"], "location":latlng, "date" : D['date'], "picked" : D['picked'], 'waiver': D['waiver']}
     temp_rider = False
     for rider in json_data["riders"]:
         if rider['id'] == user['id']:
             temp_rider = True
-            rider['trip'] = user['trip']
+            rider['date'] = user['date']
             rider['location'] = user['location']
     if temp_rider == False:
         json_data["riders"].append(
@@ -66,14 +66,14 @@ def add():
     # Update trips list in the database
     temp = False
     for trip in json_data['trips']:
-        if D['trip'] in trip.keys():
-            for t in trip[D['trip']]:
+        if D['date'] in trip.keys():
+            for t in trip[D['date']]:
                 if t[0] == D['id']:
                     temp = True
             if temp == False:
-                trip[D['trip']].append([D['id'] , latlng])
+                trip[D['date']].append([D['id'] , latlng])
         else:
-            trip[D['trip']] = [[D['id'] , latlng]]
+            trip[D['date']] = [[D['id'] , latlng]]
     
     # Write local dict (edited) back to json file.
     with open(filename, "w") as json_file:

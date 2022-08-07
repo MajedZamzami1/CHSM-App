@@ -56,12 +56,35 @@
         <td><input type="text" id="surname" name="surname" placeholder="Doe"><br></td>
       </tr>
       <tr>
-        <td><label for="dob">Date of Birth:</label></td>
+        <td><label for="birthdate">Date of Birth:</label></td>
         <td><input type="date" id="birthdate" name="birthdate"><br></td>
       </tr>
       <tr>
-        <td><label for="trip">Trip:</label></td>
-        <td><input type="text" id="trip" name="trip"><br></td>
+        <td>>Day:</td>
+        <td>
+            <select id = 'day'>
+                <option value="today">Today</option>
+                <option value="tomorrow">Tomoroow</option>
+            </select>
+        </td>
+      </tr>
+    <tr>
+        <td>>Pickup Time:</td>
+        <td>
+            <select id = 'time'>
+                <option value="08:30">08:30</option>
+                <option value="09:15">09:15</option>
+                <option value="10:00">10:00</option>
+                <option value="10:45">10:45</option>
+                <option value="11:30">11:30</option>
+                <option value="12:15">12:15</option>
+                <option value="01:00">01:00</option>
+                <option value="01:45">01:45</option>
+                <option value="02:30">02:30</option>
+                <option value="03:15">03:15</option>
+                <option value="04:00">04:00</option>
+            </select>
+        </td>
       </tr>
   </table>
   <table>
@@ -78,32 +101,90 @@
         <td style="text-align: center;"><input type="text" id="riders-id" name="riders-id" placeholder="jd1234"></td>
         <td style="text-align: center;"><input type="text" id="riders-name" name="riders-name" placeholder="John"></td>
         <td style="text-align: center;"><input type="text" id="riders-surname" name="riders-surname" placeholder="Doe"></td>
-        <td style="text-align: center;"><input type="date" id="riders-dob" name="riders-dob" ></td>
+        <td style="text-align: center;"><input type="date" id="riders-birthdate" name="riders-birthdate" ></td>
         <td style="text-align: center;"><input type="button" id="add-button" value="Add"></td>
     </tr>
     <tr>
         <td colspan="5"><ul id="riders-list"></ul></td>
     </tr>
     <tr id ='submit-row'>
-      <td colspan="4"><input type="button" id="submit"  onclick=submitData() value="Submit"></td>
+      <td colspan="4"><input type="button" id="submit"  onclick=submitData(lst) value="Submit"></td>
     </tr>
+
+    
 </table>
     </form>
     <div id="map"></div>
     <script type = 'text/javascript'>
+      var lst = [];
+
+      document.getElementById('add-button').onclick = function() {
+                var ul = document.getElementById('riders-list');
+                var li = document.createElement('li');
+                var id = document.getElementById('riders-id')
+                var name = document.getElementById('riders-name')
+                var surname = document.getElementById('riders-surname')
+                var birthdate = document.getElementById('riders-birthdate')
+                
+                if (ul.getElementsByTagName('li').length < 2) {
+                    if (name.value != '' && surname.value != '' && birthdate.value != '') {
+                        li.innerHTML = name.value + ' ' + surname.value + ' (' + birthdate.value + ') - ' + id.value
+                        if (id == ''){
+                          var val = Math.floor(1000 + Math.random() * 9000);
+                          var id = name[0].toLowerCase() + surname[0].toLowerCase() + val;
+                          var waiver = false
+                          }
+                          else{
+                            var waiver = true
+                        }
+                        temp = [id.value,name.value,surname.value,birthdate.value ,waiver]
+                        lst.push(temp)
+                        id.value = ''
+                        name.value = ''
+                        surname.value = ''
+                        birthdate.value = ''
+                        ul.appendChild(li)
+                    }
+                } else {
+                    alert('Maximum number of riders reached!')
+                }
+            }
       
-      function submitData(){
+      function submitData(lst){
         var id = $('#id').val();
         var name = $('#name').val();
         var surname = $('#surname').val();
         var birthdate = $('#birthdate').val();
-        var trip = $('#trip').val();
+        var day = $('#day').val();
+        var time = $('#time').val();
         var loc = sendMarker(marker);
+        
+        
 
-        console.log(loc)
+        const today = new Date();
+        const tomorrow = new Date(today);
+        
+        tomorrow .setDate(tomorrow.getDate()+1);
+
+        const config = {
+          year: 'numeric',
+          month: 'short',
+          day : '2-digit'
+        };
+
+        const DTF = new Intl.DateTimeFormat('default',config);
+        
+        if (day == 'today'){
+        var day = DTF.format(today);
+        }
+        else if (day == 'tomorrow'){
+        var day = DTF.format(tomorrow);
+        }
+
+        var date =  day + '   ' + time 
+
 
         let location = new URLSearchParams(loc);
-        console.log(loc)
         if (id == '')
         {
         var val = Math.floor(1000 + Math.random() * 9000);
@@ -113,10 +194,16 @@
         else{
           var waiver = true
         }
+        var picked = false
         toString(id)
         birthdate = birthdate.replaceAll('/', '-')
-        url = 'http://127.0.0.1:8000/cgi-bin/getData.py?' + '&id=' + id + '&name='+name + '&surname='+surname + '&birthdate='+birthdate + '&trip='+trip + '&location='+ location + '&waiver=' + waiver
-      fetch(url)
+        console.log(lst)
+        url = 'http://127.0.0.1:8000/cgi-bin/getData.py?' + '&id=' + id + '&name='+name + '&surname='+surname + '&birthdate='+birthdate  + '&location='+ location + '&date='+ date + "&picked=" + picked + '&waiver=' + waiver
+        for (var i = 0; i < lst.length; i++){
+          url = 'http://127.0.0.1:8000/cgi-bin/getData.py?' + '&id=' + lst[i][0] + '&name='+lst[i][1] + '&surname='+lst[i][2] + '&birthdate='+lst[i][3] + '&location='+ location + '&date='+date + "&picked=" + picked + '&waiver=' + lst[i][4]
+
+        }
+		      fetch(url)
         .then(data => {
           return data.json();
         }).then(json => { 
