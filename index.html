@@ -184,7 +184,7 @@
 
         var temp_date =  day + '   ' + time 
         var date = temp_date.split()
-        console.log(date)
+        //console.log(date)
         let location = new URLSearchParams(loc);
         
         if (id == '')
@@ -198,30 +198,33 @@
           var id_in = false
           var rider_in = false
           for (let i = 0; i < json.riders.length; i++) {
-             console.log(json.riders[i])
+             //console.log(json.riders[i])
              rider = json.riders[i]
             // console.log('|||||')
             // console.log(id)
             if (rider.id == id){
-              var id_in = true
+              id_in = true
+              console.log("||||||||||||||")
               if (rider.name == name & rider.surname == surname & rider.birthdate == birthdate){
-                var rider_in = true
+                console.log("||||||||||||||")
+                rider_in = true
                 break;
               }
             }
           }
-          if (rider_in == false & id_in == true)
-            return alert("ID does not match rider's information")
-            
+          if (rider_in == false & id_in == true){
+            alert("ID does not match rider's information") 
+          }
         })};
 
         var picked = false
         toString(id)
         birthdate = birthdate.replaceAll('/', '-')
-        console.log(lst)
+        //console.log(lst)
         url = 'http://127.0.0.1:8000/cgi-bin/getData.py?' + 'function=' + 'add' + '&id=' + id + '&name='+name + '&surname='+surname + '&birthdate='+birthdate  + '&location='+ location + '&date='+ date + "&picked=" + picked + '&waiver=' + 'false'
         for (var i = 0; i < lst.length; i++){
           url = 'http://127.0.0.1:8000/cgi-bin/getData.py?' + 'function=' + 'add' + '&id=' + lst[i][0] + '&name='+lst[i][1] + '&surname='+lst[i][2] + '&birthdate='+lst[i][3] + '&location='+ location + '&date='+date + "&picked=" + picked + '&waiver=' + lst[i][4]
+
         }
 		      fetch(url)
         .then(data => {
