@@ -33,10 +33,21 @@ print(json.dumps(D))
 
 def get():
     json_data = {}
+    id = D['id']
     with open(filename, 'r') as json_file:
         json_data = json.load(json_file)
 
-    print(json.dumps(json_data))
+    for rider in json_data['riders']:
+        if rider['id'] == id:
+            print(True)
+            rider['date'] = ''
+
+
+    with open(filename, "w") as json_file:
+        json_data = json.dumps(json_data)
+        json_file.write(json_data)
+        json_file.close()
+    
 
 trips = {}
 
@@ -55,9 +66,12 @@ def add():
     temp_rider = False
     for rider in json_data["riders"]:
         if rider['id'] == user['id']:
-            temp_rider = True
-            rider['date'] = user['date']
-            rider['location'] = user['location']
+            if rider['name'] == user['name'] and rider['surname'] == user['surname'] and rider['birthdate'] == rider['birthdate']:
+                temp_rider = True
+                rider['date'] = user['date']
+                rider['location'] = user['location']
+            else:
+                return 'False'
     if temp_rider == False:
         json_data["riders"].append(
             user
@@ -81,4 +95,9 @@ def add():
         json_file.write(json_data)
         json_file.close()
 
-add()
+
+
+if(D["function"] == "add"):
+    add()
+else:
+    get()
