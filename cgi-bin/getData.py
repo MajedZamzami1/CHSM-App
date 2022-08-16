@@ -1,5 +1,4 @@
 #!/usr/bin/python
-
 from cProfile import label
 import cgi
 import cgitb
@@ -31,25 +30,22 @@ D = Form2Dict()
 D['status'] = True
 print(json.dumps(D))
 
-def get():
+def delete():
     json_data = {}
     id = D['id']
     with open(filename, 'r') as json_file:
         json_data = json.load(json_file)
 
-    for rider in json_data['riders']:
-        if rider['id'] == id:
-            print(True)
-            rider['date'] = ''
-
+        for rider in json_data['riders']:
+            if rider['id'] == id:
+                rider['date'] = ''
 
     with open(filename, "w") as json_file:
         json_data = json.dumps(json_data)
         json_file.write(json_data)
         json_file.close()
-    
 
-trips = {}
+#trips = {}
 
 def add():
     json_data = {}
@@ -78,16 +74,16 @@ def add():
     )
 
     # Update trips list in the database
-    temp = False
-    for trip in json_data['trips']:
-        if D['date'] in trip.keys():
-            for t in trip[D['date']]:
-                if t[0] == D['id']:
-                    temp = True
-            if temp == False:
-                trip[D['date']].append([D['id'] , latlng])
-        else:
-            trip[D['date']] = [[D['id'] , latlng]]
+    # temp = False
+    # for trip in json_data['trips']:
+    #     if D['date'] in trip.keys():
+    #         for t in trip[D['date']]:
+    #             if t[0] == D['id']:
+    #                 temp = True
+    #         if temp == False:
+    #             trip[D['date']].append([D['id'] , latlng])
+    #     else:
+    #         trip[D['date']] = [[D['id'] , latlng]]
     
     # Write local dict (edited) back to json file.
     with open(filename, "w") as json_file:
@@ -95,9 +91,30 @@ def add():
         json_file.write(json_data)
         json_file.close()
 
+def set():
+    id = D['id']
+    json_data = {}
+
+    with open(filename, 'r') as json_file:
+        json_data = json.load(json_file)
+        print(json_data)
+
+    for rider in json_data['riders']:
+        if rider["id"] == id:
+            if 'waiver' in D:
+                rider["waiver"] = D['waiver']
+            if 'picked' in D:
+                rider["picked"] = D['picked']
+
+    with open(filename, 'w') as json_file:
+        json_data = json.dumps(json_data)
+        json_file.write(json_data)
+        json_file.close()
 
 
 if(D["function"] == "add"):
     add()
+elif (D['function'] == 'set'):
+    set()
 else:
-    get()
+    delete()
